@@ -1,8 +1,12 @@
 {{ define "main" }}
-<div class="container">
-<h1>{{ .Title }}</h1>
-{{ partial "metadata.html" . }}
-<br><br>
-{{ .Content }}
+<div class="columns is-centered">
+    <div class="column is-two-thirds">
+        <div class="container is-fluid">
+            <h1>{{ .Title }}</h1>
+            {{ partial "metadata.html" . }}
+            <br><br>
+            {{ .Content }}
+        </div>
+    </div>
 </div>
 {{ end }}
