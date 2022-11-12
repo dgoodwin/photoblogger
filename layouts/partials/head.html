@@ -2,6 +2,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+
+    <!-- loud bulma css compiled with our customizations from scss -->
+    {{ $cssOpts := (dict "includePaths" (slice "node_modules/bulma" "assets/scss")) }}
+    {{ with $styles := resources.Get "scss/main.scss" | toCSS $cssOpts }}
+    <style>{{ .Content | safeCSS }}</style>
+    {{ end }}
+
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     {{ $title := print .Site.Title " | " .Title }}
     {{ if .IsHome }}{{ $title = .Site.Title }}{{ end }}
