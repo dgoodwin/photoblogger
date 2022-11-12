@@ -1,7 +1,17 @@
+// allows us to use initial variables in our override
 @import 'sass/utilities/initial-variables.sass';
 
-$scheme-main: $black;
+$scheme-main: $grey-darker;
 $scheme-invert: $white;
-$text: $grey-light;
+$scheme-main-bis: $grey-dark;
+
+$text: $grey-light; // normal text
+$text-strong: $green; // header tags
+$link: $green;
+$link-hover: $grey-light;
+$footer-background-color: $grey-dark;
+$footer-color: $grey-light;
+
+$footer-padding: 2rem;
 
 @import 'bulma.sass';
