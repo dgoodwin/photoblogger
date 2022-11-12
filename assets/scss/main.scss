@@ -1,1 +1,7 @@
+@import 'sass/utilities/initial-variables.sass';
+
+$scheme-main: $black;
+$scheme-invert: $white;
+$text: $grey-light;
+
 @import 'bulma.sass';
