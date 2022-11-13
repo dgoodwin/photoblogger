@@ -6,7 +6,7 @@
     {{ if .Site.Params.galleryColumns.Get .Section }}
         {{ $portfolioScratch := newScratch }}
         {{ $portfolioMobileScratch := newScratch }}
-        {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" .RegularPagesRecursive "ctx" .) }}
+        {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" .RegularPagesRecursive "columnsCount" (.Site.Params.galleryColumns.Get .Section) "ctx" .) }}
 
         <section id="desktop" class="section work">
             {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
