@@ -1,16 +1,31 @@
 {{ define "main" }}
 <div class="container">
     <h1>{{ .Title }}</h1>
-    {{ range .RegularPagesRecursive }}
-    <div class="card m-5">
-        <div class="card-content">
-            <div class="content">
-                <h4><a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
-                {{ partial "metadata.html" . }}
-                <p>{{ .Summary }}</p>
+
+    <!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
+    {{ if .Site.Params.galleryColumns.Get .Section }}
+        {{ $portfolioScratch := newScratch }}
+        {{ $portfolioMobileScratch := newScratch }}
+        {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" .RegularPagesRecursive "ctx" .) }}
+
+        <section id="desktop" class="section work">
+            {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
+        </section>
+
+    <!-- fork for regular content sections (predominantly text) -->
+    {{ else }}
+        {{ range .RegularPagesRecursive }}
+        <div class="card m-5">
+            <div class="card-content">
+                <div class="content">
+                    <h4><a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+                    {{ partial "metadata.html" . }}
+                    <p>{{ .Summary }}</p>
+                </div>
             </div>
         </div>
-    </div>
+        {{ end }}
     {{ end }}
+
 </div>
 {{ end }}
