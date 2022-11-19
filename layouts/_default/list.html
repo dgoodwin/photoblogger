@@ -1,19 +1,21 @@
 {{ define "main" }}
-<div class="container">
+
+<!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
+<section class="section">
     <h1>{{ .Title }}</h1>
 
-    <!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
     {{ if .Site.Params.galleryColumns.Get .Section }}
-        {{ $portfolioScratch := newScratch }}
-        {{ $portfolioMobileScratch := newScratch }}
-        {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" .RegularPagesRecursive "columnsCount" (.Site.Params.galleryColumns.Get .Section) "ctx" .) }}
+    {{ $portfolioScratch := newScratch }}
+    {{ $portfolioMobileScratch := newScratch }}
+    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" .RegularPagesRecursive "columnsCount" (.Site.Params.galleryColumns.Get .Section) "ctx" .) }}
 
-        <section id="desktop" class="section work">
-            {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
-        </section>
+    <section id="desktop" class="section work">
+        {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
+    </section>
 
     <!-- fork for regular content sections (predominantly text) -->
     {{ else }}
+    <div class="container">
         {{ range .RegularPagesRecursive }}
         <div class="card m-5">
             <div class="card-content">
@@ -25,7 +27,8 @@
             </div>
         </div>
         {{ end }}
+    </div>
     {{ end }}
 
-</div>
+</section>
 {{ end }}
