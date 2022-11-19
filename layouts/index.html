@@ -1,5 +1,6 @@
 {{ define "main" }}
 <section class="section">
-    <h1 class="title has-text-centered">{{ .Site.Title }}</h1>
+    <h1 class="title">{{ .Site.Params.homeInfoParams.Title }}</h1>
+    {{ .Site.Params.homeInfoParams.Content }}
 </section>
 {{ end }}

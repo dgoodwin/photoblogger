@@ -5,7 +5,19 @@
             <h1>{{ .Title }}</h1>
             {{ partial "metadata.html" . }}
             <br><br>
-            {{ .Content }}
+            <section class="section">
+                {{ .Content }}
+                <div class="tags mt-3">
+                    {{ with .Params.tags }}
+                    {{ range . }}
+                    {{ $href := print (absURL "tags/") (urlize .) }}
+                    <a class="btn btn-sm btn-outline-dark tag-btn" href="{{ $href }}">
+                        <span class="tag is-rounded p-2 m-1">{{ . }}</span>
+                    </a>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </section>
         </div>
     </div>
 </div>
