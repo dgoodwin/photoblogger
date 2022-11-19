@@ -3,4 +3,18 @@
     <h1 class="title">{{ .Site.Params.homeInfoParams.Title }}</h1>
     {{ .Site.Params.homeInfoParams.Content }}
 </section>
+
+<section class="section">
+    <h1>Latest Photography</h1>
+
+    {{ $posts := slice }}
+    {{ $posts = where .Site.RegularPages ".Section" "photography" }}
+    {{ $portfolioScratch := newScratch }}
+    {{ $portfolioMobileScratch := newScratch }}
+    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" $posts "columnsCount" 3 "limit" 3 "ctx" .) }}
+        <section id="desktop" class="section work">
+            {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
+        </section>
+</section>
+
 {{ end }}
