@@ -1,20 +1,22 @@
 {{ define "main" }}
 <section class="section">
-    <h1 class="title">{{ .Site.Params.homeInfoParams.Title }}</h1>
-    {{ .Site.Params.homeInfoParams.Content }}
+    <h1 class="title">{{ .Site.Params.homePage.title }}</h1>
+    {{ .Site.Params.homePage.description }}
 </section>
 
+{{ if .Site.Params.homePage.latestImagesSection }}
 <section class="section">
-    <h1>Latest Photography</h1>
+    <h1>Latest {{ .Site.Params.homePage.latestImagesSection }}</h1>
 
     {{ $posts := slice }}
-    {{ $posts = where .Site.RegularPages ".Section" "photography" }}
+    {{ $posts = where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
     {{ $portfolioScratch := newScratch }}
     {{ $portfolioMobileScratch := newScratch }}
-    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" $posts "columnsCount" 3 "limit" 3 "ctx" .) }}
-        <section id="desktop" class="section work">
-            {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
-        </section>
+    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" $posts "columnsCount" 6 "limit" 6 "ctx" .) }}
+    <section id="desktop" class="section work">
+        {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
+    </section>
 </section>
+{{ end }}
 
 {{ end }}
