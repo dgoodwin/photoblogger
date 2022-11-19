@@ -1,0 +1,19 @@
+# TODO
+
+## High Prio
+
+* Design a main page intro section.
+* Add recent photography and blog posts to main page.
+* Social icons.
+* Fixup post date.
+* Experiment with cards for images, titles, and image counts, in columns gallery.
+* Touchup nav bar.
+* Config driven theme colors.
+* Photo post auto gallery setting, if used, we'll default to display a gallery of some kind. Maybe columns.
+* Add shortcode for single image display, as shortcode-gallery is not good at this, makes them too large. Simplest might just be a "show every image in large size" shortcode.
+
+## Low Prio
+
+* Experiment with adding a custom taxonomy for color theme in photography posts, manually assigned, but then sort posts on this. (optionally for tags/sections?)
+* Get the footer at the bottom of the viewport? Or will this be a non-issue once we fill in main page.
+* Add additional shortcodes. Zoomwall, etc. Used has the option of how to render their content.
