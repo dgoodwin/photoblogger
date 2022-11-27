@@ -1,9 +1,13 @@
 {{ define "main" }}
 
 <!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
+<div class="container is-two-thirds">
 <section class="section">
     <h1>{{ .Title }}</h1>
+</section>
+</div>
 
+<section class="section">
     {{ if .Site.Params.galleryColumns.Get .Section }}
     {{ $portfolioScratch := newScratch }}
     {{ $portfolioMobileScratch := newScratch }}
@@ -31,4 +35,5 @@
     {{ end }}
 
 </section>
+
 {{ end }}
