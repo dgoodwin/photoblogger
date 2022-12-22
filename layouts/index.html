@@ -13,7 +13,7 @@
     {{ $posts = where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
     {{ $portfolioScratch := newScratch }}
     {{ $portfolioMobileScratch := newScratch }}
-    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" $posts "columnsCount" 3 "limit" 3 "ctx" .) }}
+    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" $posts "columnsCount" 3 "limit" 9 "ctx" .) }}
     <section id="desktop" class="section work">
         {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
     </section>
