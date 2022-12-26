@@ -7,8 +7,6 @@
 
 {{ if .Site.Params.homePage.latestImagesSection }}
 <section class="section">
-    <h1>Latest {{ .Site.Params.homePage.latestImagesSection }}</h1>
-
     {{ $posts := slice }}
     {{ $posts = where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
     {{ $portfolioScratch := newScratch }}
