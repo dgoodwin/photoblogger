@@ -6,14 +6,10 @@
 </section>
 {{ if .Site.Params.homePage.latestImagesSection }}
 <section class="section">
-    {{ $posts := slice }}
-    {{ $posts = where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
-    {{ $portfolioScratch := newScratch }}
-    {{ $portfolioMobileScratch := newScratch }}
-    {{ partial "eternity/columns" (dict  "portfolioScratch" $portfolioScratch "portfolioMobileScratch" $portfolioMobileScratch "posts" $posts "columnsCount" 3 "limit" 9 "ctx" .) }}
-    <section id="desktop" class="section work">
-        {{ partial "eternity/slider" (dict "scratch" $portfolioScratch "type" "desktop" "ctx" .) }}
-    </section>
+    {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
+    <!-- limit to the most recent posts for the home page -->
+    {{ $posts = first 9 $posts }}
+    {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
 </section>
 {{ end }}
 </div>

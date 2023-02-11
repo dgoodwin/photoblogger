@@ -14,7 +14,6 @@
     {{ if .Site.Params.galleryColumns.Get .Section }}
 
     <section id="desktop" class="section work">
-        {{ $galleryScratch := newScratch }}
         {{ $posts := .RegularPagesRecursive }}
         {{ partial "postgallery" (dict "posts" .RegularPagesRecursive "page" .Page "ctx" .) }}
     </section>
