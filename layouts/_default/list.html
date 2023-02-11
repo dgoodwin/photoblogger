@@ -13,13 +13,12 @@
 
     {{ if .Site.Params.galleryColumns.Get .Section }}
 
-    <section id="desktop" class="section work">
-        {{ $posts := .RegularPagesRecursive }}
-        {{ partial "postgallery" (dict "posts" .RegularPagesRecursive "page" .Page "ctx" .) }}
-    </section>
+    {{ $posts := .RegularPagesRecursive }}
+    {{ partial "postgallery" (dict "posts" .RegularPagesRecursive "page" .Page "ctx" .) }}
+
+    {{ else }}
 
     <!-- fork for regular content sections (predominantly text) -->
-    {{ else }}
     <div class="container">
         {{ range .RegularPagesRecursive }}
         <div class="card m-5">
