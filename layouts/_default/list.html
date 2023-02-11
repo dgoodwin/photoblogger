@@ -16,7 +16,7 @@
     <section id="desktop" class="section work">
         {{ $galleryScratch := newScratch }}
         {{ $posts := .RegularPagesRecursive }}
-        {{ partial "postgallery" (dict "posts" .RegularPagesRecursive "page" .Page) }}
+        {{ partial "postgallery" (dict "posts" .RegularPagesRecursive "page" .Page "ctx" .) }}
     </section>
 
     <!-- fork for regular content sections (predominantly text) -->

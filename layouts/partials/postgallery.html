@@ -1,22 +1,22 @@
 
 
-        {{ $thumbnailResizeOptions := default (.Site.Params.galleryThumbnailResizeOptions | default "300x150 q85 Lanczos") }}
+        {{ $thumbnailResizeOptions := default ($.ctx.Site.Params.galleryThumbnailResizeOptions | default "300x150 q85 Lanczos") }}
 
-        {{ $imageResizeOptions := default .Site.Params.galleryImageResizeOptions }}
+        {{ $imageResizeOptions := default $.ctx.Site.Params.galleryImageResizeOptions }}
 
-        {{ $sortOrder := default (.Site.Params.gallerySortOrder | default "asc") }}
+        {{ $sortOrder := default ($.ctx.Site.Params.gallerySortOrder | default "asc") }}
 
-        {{ $rowHeight := default (.Site.Params.galleryRowHeight | default 150) }}
+        {{ $rowHeight := default ($.ctx.Site.Params.galleryRowHeight | default 150) }}
 
-        {{ $margins := default (.Site.Params.galleryRowMargins | default 5) }}
+        {{ $margins := default ($.ctx.Site.Params.galleryRowMargins | default 5) }}
 
-        {{ $randomize := default (.Site.Params.galleryRandomize | default false) }}
+        {{ $randomize := default ($.ctx.Site.Params.galleryRandomize | default false) }}
 
-        {{ $justifiedGalleryParameters := default (.Site.Params.galleryJustifiedGalleryParameters | default "") }}
+        {{ $justifiedGalleryParameters := default ($.ctx.Site.Params.galleryJustifiedGalleryParameters | default "") }}
 
-        {{ $previewType := default (.Site.Params.galleryPreviewType | default "blur") }}
+        {{ $previewType := default ($.ctx.Site.Params.galleryPreviewType | default "blur") }}
 
-        {{ $embedPreview := default (.Site.Params.galleryEmbedPreview | default true) }}
+        {{ $embedPreview := default ($.ctx.Site.Params.galleryEmbedPreview | default true) }}
 
 
         <script src="{{ "shortcode-gallery/jquery-3.6.1.min.js" | relURL }}"></script>
@@ -38,7 +38,7 @@
 
             $( document ).ready(() => {
                 const gallery = $("#{{ $galleryId }}");
-                {{ $lastRowJustification := default (.Site.Params.galleryLastRow | default "justify") }}
+                {{ $lastRowJustification := default ($.ctx.Site.Params.galleryLastRow | default "justify") }}
 
                 // the instance of swipebox, it will be set once justifiedGallery is initialized
                 let swipeboxInstance = null;
