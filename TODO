@@ -2,6 +2,10 @@
 
 ## High Prio
 
+* Back to PaperMod with what we've learned?
+* Attribute code from justified gallery
+* Tags and portfolio
+* Auto-open single image photo posts in lightbox? Or show them in a better size?
 * Pagination, it's soon going to be too big to have everything on one page. By year? X posts at a time?
 * Find a way to communicate post title and count of images.
 * Deal with how to display single images properly. Two clicks to open in lightbox.
@@ -9,7 +13,6 @@
 * Social icons.
 * Fixup post date.
 * Config driven theme colors.
-* Auto-open single image photo posts in lightbox? Or show them in a better size?
 
 ## Low Prio
 

@@ -11,27 +11,68 @@
 
 <section class="section">
 
+    {{ $paginator := .Paginate .RegularPagesRecursive }}
+
+    <!-- Pagination nav, duplicated below -->
+    {{ $pageIter := .Paginator }}
+    {{ if gt $pageIter.TotalPages 1 }}
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            {{ if $pageIter.HasPrev }}
+            <a class="pagination-previous" href="{{ $pageIter.Prev.URL }}">Prev</a>
+            {{ end }}
+            {{ if $pageIter.HasNext }}
+            <a class="pagination-next" href="{{ $pageIter.Next.URL }}">Next</a>
+            {{ end }}
+            <ul class="pagination-list">
+                {{ range $paginator.Pagers }}
+                    <li>
+                        <a class="pagination-link" href="{{ .URL }}" aria-label="Page {{ .PageNumber }}">{{ .PageNumber }}</a>
+                    </li>
+                {{ end }}
+            </ul>
+        </nav>
+    {{ end }}
+
     {{ if .Site.Params.galleryColumns.Get .Section }}
 
-    {{ $posts := .RegularPagesRecursive }}
-    {{ partial "postgallery" (dict "posts" .RegularPagesRecursive "page" .Page "ctx" .) }}
+        {{ $posts := $paginator.Pages }}
+        {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
 
     {{ else }}
 
-    <!-- fork for regular content sections (predominantly text) -->
-    <div class="container">
-        {{ range .RegularPagesRecursive }}
-        <div class="card m-5">
-            <div class="card-content">
-                <div class="content">
-                    <h4><a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
-                    {{ partial "metadata.html" . }}
-                    <p>{{ .Summary }}</p>
+        <!-- fork for regular content sections (predominantly text) -->
+        <div class="container">
+            {{ range $paginator.Pages }}
+                <div class="card m-5">
+                    <div class="card-content">
+                        <div class="content">
+                            <h4><a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+                            {{ partial "metadata.html" . }}
+                            <p>{{ .Summary }}</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {{ end }}
         </div>
-        {{ end }}
-    </div>
+    {{ end }}
+
+    {{ $pageIter := .Paginator }}
+    {{ if gt $pageIter.TotalPages 1 }}
+        <nav class="pagination" role="navigation" aria-label="pagination">
+            {{ if $pageIter.HasPrev }}
+            <a class="pagination-previous" href="{{ $pageIter.Prev.URL }}">Prev</a>
+            {{ end }}
+            {{ if $pageIter.HasNext }}
+            <a class="pagination-next" href="{{ $pageIter.Next.URL }}">Next</a>
+            {{ end }}
+            <ul class="pagination-list">
+                {{ range $paginator.Pagers }}
+                    <li>
+                        <a class="pagination-link" href="{{ .URL }}" aria-label="Page {{ .PageNumber }}">{{ .PageNumber }}</a>
+                    </li>
+                {{ end }}
+            </ul>
+        </nav>
     {{ end }}
 
 </section>
