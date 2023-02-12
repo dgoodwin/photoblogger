@@ -26,7 +26,7 @@
             <ul class="pagination-list">
                 {{ range $paginator.Pagers }}
                     <li>
-                        <a class="pagination-link" href="{{ .URL }}" aria-label="Page {{ .PageNumber }}">{{ .PageNumber }}</a>
+                        <a class="pagination-link{{ if eq . $pageIter }} is-current{{ end }}" href="{{ .URL }}" aria-label="Page {{ .PageNumber }}">{{ .PageNumber }}</a>
                     </li>
                 {{ end }}
             </ul>
