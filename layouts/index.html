@@ -1,17 +1,17 @@
 {{ define "main" }}
+
 <div class="container is-two-thirds-tablet is-full-mobile">
-<section class="section">
-    <h1 class="title">{{ .Site.Params.homePage.title }}</h1>
-    {{ .Site.Params.homePage.description }}
-</section>
-{{ if .Site.Params.homePage.latestImagesSection }}
-<section class="section">
-    {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
-    <!-- limit to the most recent posts for the home page -->
-    {{ $posts = first 9 $posts }}
-    {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
-</section>
-{{ end }}
+    <section class="section">
+        <h1 class="title">{{ .Site.Params.homePage.title }}</h1>
+        {{ .Site.Params.homePage.description }}
+    </section>
+
+    {{ if .Site.Params.homePage.mainPageImageTag }}
+    <section class="section">
+        {{ $posts := where .Site.RegularPages "Params.tags" "intersect" (slice .Site.Params.homePage.mainPageImageTag) }}
+        {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
+    </section>
+    {{ end }}
 </div>
 
 {{ end }}
