@@ -1,0 +1,19 @@
+{{ define "main" }}
+
+<!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
+<div class="container is-two-thirds-tablet is-full-mobile">
+    <section class="section">
+        <h1>{{ .Title }}</h1>
+    </section>
+
+    <div class="tags mt-3">
+    {{ range sort .Site.Taxonomies.tags }}
+            <a class="btn btn-sm btn-outline-dark tag-btn" href="{{ .Page.Permalink }}">
+                <span class="tag is-rounded p-2 m-1">{{ .Page.Title }}</span>
+            </a>
+    {{ end }}
+    </div>
+</div>
+
+
+{{ end }}
