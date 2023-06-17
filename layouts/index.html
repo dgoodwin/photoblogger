@@ -1,8 +1,18 @@
 {{ define "main" }}
 
 <div class="container is-two-thirds-tablet is-full-mobile">
-    <h1 class="title">{{ .Site.Params.homePage.title }}</h1>
+    <p>
     {{ .Site.Params.homePage.description }}
+    </p>
+
+    <h2 class="title">{{ .Site.Params.homePage.title }}</h2>
+
+    <div class="columns">
+    <div class="column is-half">
+    {{ .Content }}
+    </div>
+    </div>
+    <p/>
 
     {{ if .Site.Params.homePage.mainPageImageTag }}
         {{ $posts := where .Site.RegularPages "Params.tags" "intersect" (slice .Site.Params.homePage.mainPageImageTag) }}
