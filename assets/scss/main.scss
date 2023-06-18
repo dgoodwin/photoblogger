@@ -5,10 +5,12 @@ $scheme-main: $grey-darker;
 $scheme-invert: $white;
 $scheme-main-bis: $grey-dark;
 
+$primary: $red;
+
 $text: $white-ter; // normal text
 $text-strong: $red; // header tags
 $link: $cyan;
-$link-hover: $grey-light;
+$link-hover: $grey-dark;
 $footer-background-color: $grey-dark;
 $footer-color: $grey-light;
 
@@ -17,6 +19,11 @@ $footer-padding: 2rem;
 $card-shadow: 10px;
 $card-radius: 1rem;
 $card-content-padding: 1.5rem;
-$card-background-color: $grey-light;
+$card-background-color: $grey-dark;
+
+$pagination-current-background-color: $primary;
+$pagination-color: $link;
+$pagination-hover-color: $primary;
+//$pagination-disabled-background-color: $grey-light;
 
 @import 'bulma.sass';

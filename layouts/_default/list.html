@@ -42,7 +42,7 @@
                 <div class="card m-5">
                     <div class="card-content">
                         <div class="content">
-                            <h4><a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+                            <div class="is-size-3"><a class="title has-text-link" href="{{ .RelPermalink }}">{{ .Title }}</a></div>
                             {{ partial "metadata.html" . }}
                             <p>{{ .Summary }}</p>
                         </div>

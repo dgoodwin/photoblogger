@@ -13,7 +13,7 @@
                     {{ range . }}
                     {{ $href := print (absURL "tags/") (urlize .) }}
                     <a class="btn btn-sm btn-outline-dark tag-btn" href="{{ $href }}">
-                        <span class="tag is-rounded p-2 m-1">{{ . }}</span>
+                        <span class="tag is-rounded is-link p-2 m-1">{{ . }}</span>
                     </a>
                     {{ end }}
                     {{ end }}

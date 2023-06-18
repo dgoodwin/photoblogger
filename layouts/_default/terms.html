@@ -9,7 +9,7 @@
     <div class="tags mt-3">
     {{ range sort .Site.Taxonomies.tags }}
             <a class="btn btn-sm btn-outline-dark tag-btn" href="{{ .Page.Permalink }}">
-                <span class="tag is-rounded p-2 m-1">{{ .Page.Title }}</span>
+                <span class="tag is-rounded is-link p-2 m-1">{{ .Page.Title }}</span>
             </a>
     {{ end }}
     </div>
