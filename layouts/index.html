@@ -1,27 +1,20 @@
 {{ define "main" }}
 
+<section class="section">
 <div class="container is-two-thirds-tablet is-full-mobile">
-    <p>
-    {{ .Site.Params.homePage.description }}
-    </p>
-
-
     <div class="columns is-centered">
         <div class="column is-half">
-            <div class="is-size-2 is-centered">{{ .Site.Params.homePage.title }}</div>
+            <div class="is-size-3 is-centered">{{ .Site.Params.homePage.title }}</div>
             {{ .Content }}
         </div>
     </div>
-    <p/>
 
     {{ if .Site.Params.homePage.latestImagesSection }}
-    <section class="section">
-        <div class="is-size-4">Latest Photography</div>
-        {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
-        <!-- limit to the most recent posts for the home page -->
-        {{ $posts = first 9 $posts }}
-        {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
-    </section>
+    <div class="is-size-4">Latest Photography</div>
+    {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
+    <!-- limit to the most recent posts for the home page -->
+    {{ $posts = first 9 $posts }}
+    {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
     {{ end }}
 
 
@@ -33,5 +26,6 @@
     {{ end }}
     -->
 </div>
+</section>
 
 {{ end }}
