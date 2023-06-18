@@ -1,15 +1,10 @@
 {{ define "main" }}
 
-<!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
-<div class="container is-two-thirds-tablet is-full-mobile">
 <section class="section">
-    <h1>{{ .Title }}</h1>
-</section>
-</div>
-
-
-<section class="section">
-
+    <!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
+    <div class="container is-two-thirds-tablet is-full-mobile">
+        <h1>{{ .Title }}</h1>
+    </div>
     {{ $paginator := .Paginate .RegularPagesRecursive }}
 
     <!-- Pagination nav, duplicated below -->
