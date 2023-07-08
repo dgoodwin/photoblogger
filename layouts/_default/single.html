@@ -5,7 +5,7 @@
         <div class="container is-fluid">
             <section class="section">
                 <nav class="level">
-                    <div class="level-item is-size-3 has-text-primary">{{ .Title }}</div>
+                    <div class="title level-item is-3 has-text-primary">{{ .Title }}</div>
                     <div class="level-item">
                     {{ if not .Params.nodate }}
                         {{ partial "metadata.html" . }}
