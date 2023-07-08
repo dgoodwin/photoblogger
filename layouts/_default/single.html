@@ -4,12 +4,16 @@
     <div class="column is-three-quarters-tablet is-full-mobile">
         <div class="container is-fluid">
             <section class="section">
-                <div class="is-size-3 has-text-primary">{{ .Title }}</div>
-                {{ if not .Params.nodate }}
-                    {{ partial "metadata.html" . }}
-                {{ end }}
+                <nav class="level">
+                    <div class="level-item is-size-3 has-text-primary">{{ .Title }}</div>
+                    <div class="level-item">
+                    {{ if not .Params.nodate }}
+                        {{ partial "metadata.html" . }}
+                    {{ end }}
+                    </div>
+                </nav>
                 {{ .Content }}
-                <div class="tags mt-3">
+                <div class="tags mt-3 is-centered">
                     {{ with .Params.tags }}
                     {{ range . }}
                     {{ $href := print (absURL "tags/") (urlize .) }}
