@@ -3,10 +3,11 @@
 <div class="columns is-centered">
     <div class="column is-three-quarters-tablet is-full-mobile">
         <div class="container is-fluid">
-            <h1>{{ .Title }}</h1>
-            {{ partial "metadata.html" . }}
-            <br><br>
             <section class="section">
+                <div class="is-size-3 has-text-primary">{{ .Title }}</div>
+                {{ if not .Params.nodate }}
+                    {{ partial "metadata.html" . }}
+                {{ end }}
                 {{ .Content }}
                 <div class="tags mt-3">
                     {{ with .Params.tags }}
