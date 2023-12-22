@@ -29,7 +29,7 @@
 
     <!-- Switch to image gallery post list if we're in one of the sections we listed in our config, or the first post is. (i.e. tag listing) -->
     {{ $firstPost := index $paginator.Pages 0 }}
-    {{ if or (.Site.Params.galleryColumns.Get .Section) (.Site.Params.galleryColumns.Get $firstPost.Section) }}
+    {{ if or (index .Site.Params.galleryColumns .Section) (index .Site.Params.galleryColumns $firstPost.Section) }}
 
         {{ $posts := $paginator.Pages }}
         {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
