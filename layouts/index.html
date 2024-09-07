@@ -3,13 +3,13 @@
 <section class="section">
 <div class="container is-two-thirds-tablet is-full-mobile">
     <div class="subtitle is-3 is-centered has-text-primary">{{ .Site.Params.homePage.title }}</div>
+    <div class="subtitle is-5">{{ .Site.Params.homePage.description }}</div>
     {{ .Content }}
 
     {{ if .Site.Params.homePage.latestImagesSection }}
-    <div class="subtitle is-4">Latest Photography Blogs</div>
     {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
     <!-- limit to the most recent posts for the home page -->
-    {{ $posts = first 9 $posts }}
+    {{ $posts = first 20 $posts }}
     {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
     {{ end }}
 

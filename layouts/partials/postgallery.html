@@ -27,8 +27,10 @@
 
         <!-- Skipped use of Ordinal here, I don't think list page would ever show more than one
             gallery so we can hardcode -->
-        {{ $galleryId := (printf "gallery-%v" $.page.File.UniqueID)}}
-        {{ $galleryWrapperId := (printf "gallery-%v-wrapper" $.page.File.UniqueID)}}
+        {{ $randInt :=  math.Rand | mul 100000 | math.Floor }}
+
+        {{ $galleryId := (printf "gallery-%v" $randInt) }}
+        {{ $galleryWrapperId := (printf "gallery-%v-wrapper" $randInt) }}
 
 
         <script>
