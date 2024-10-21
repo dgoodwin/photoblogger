@@ -14,8 +14,6 @@
 
         {{ $justifiedGalleryParameters := default ($.ctx.Site.Params.galleryJustifiedGalleryParameters | default "") }}
 
-        {{ $previewType := default ($.ctx.Site.Params.galleryPreviewType | default "blur") }}
-
         {{ $embedPreview := default ($.ctx.Site.Params.galleryEmbedPreview | default true) }}
 
 
@@ -48,17 +46,6 @@
                 // before the gallery initialization the listener has to be added
                 // else we can get a race condition and the listener is never called
                 gallery.on('jg.complete', () => {
-                    {{ if or (eq $previewType "blur") (eq $previewType "color") }}
-                        // if there is already some low resolution image data loaded, then we will wait for loading´
-                        // the hi-res until the justified gallery has done the layout
-                        $(() => {
-                            $('.lazy').Lazy({
-                                visibleOnly: true,
-                                afterLoad: element => element.css({filter: "none", transition: "filter 1.0s ease-in-out"})
-                            });
-                        });
-                    {{ end }}
-
                     swipeboxInstance = $('.galleryImg').swipebox(
                         jQuery.extend({},
                             { {{ $justifiedGalleryParameters | safeJS }} }
@@ -141,29 +128,7 @@
                         >
                         <img
                             width="{{ $thumbnail.Width }}" height="{{ $thumbnail.Height }}"
-
-                            {{ if (eq $previewType "blur") }}
-                                {{ $preview_b := ($thumbnail.Fit ("32x32 q70 box jpg")) }}
-                                style="filter: blur(25px);"
-                                {{ if $embedPreview }}
-                                    src="data:image/jpeg;base64,{{ $preview_b.Content | base64Encode }}"
-                                {{ else }}
-                                    src="{{ $preview_b.RelPermalink }}"
-                                {{ end }}
-                                class="lazy"
-                                data-src="{{ $thumbnail.RelPermalink }}"
-                            {{ else if (eq $previewType "color") }}
-                                {{ $preview_1p := ($thumbnail.Resize ("1x1 box png")) }}
-                                {{ if $embedPreview }}
-                                    src="data:image/png;base64,{{ $preview_1p.Content | base64Encode }}"
-                                {{ else }}
-                                    src="{{ $preview_1p.RelPermalink }}"
-                                {{ end }}
-                                class="lazy"
-                                data-src="{{ $thumbnail.RelPermalink }}"
-                            {{ else }}
                                 src="{{ $thumbnail.RelPermalink }}"
-                            {{ end }}
 
                             {{ with $metadata }}
                                 {{ if .ImageDescription }}
