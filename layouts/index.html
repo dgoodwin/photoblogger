@@ -9,7 +9,7 @@
     {{ if .Site.Params.homePage.latestImagesSection }}
     {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
     <!-- limit to the most recent posts for the home page -->
-    {{ $posts = first 20 $posts }}
+    {{ $posts = first 5 $posts }}
     {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
     {{ end }}
 

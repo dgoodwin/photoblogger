@@ -5,7 +5,7 @@
     <div class="container is-two-thirds-tablet is-full-mobile">
         <h1>{{ .Title }}</h1>
     </div>
-    {{ $paginator := .Paginate .RegularPagesRecursive }}
+    {{ $paginator := .Paginate .RegularPagesRecursive 5 }}
 
     <!-- Pagination nav, duplicated below -->
     {{ $pageIter := .Paginator }}
@@ -38,7 +38,7 @@
 
         <!-- fork for regular content sections (predominantly text) -->
         <div class="container">
-            {{ range $paginator.Pages }}
+            {{ range $paginator.Pages 5 }}
                 <div class="card m-5">
                     <div class="card-content">
                         <div class="content">
