@@ -84,15 +84,15 @@
         <div id="{{ $galleryWrapperId }}" class="gallery-wrapper">
         <div id="{{ $galleryId }}" class="justified-gallery">
         {{ range $original := $.posts }}
-            {{ $original := index (.Resources.ByType "image") 0 }}
-            {{ if eq $original.ResourceType "image" }}
+            {{ range $img := .Resources.ByType "image" }}
+            {{ if eq $img.ResourceType "image" }}
 
                 {{ $metadata := dict }}
 
                 {{/* If the image has exif informations, those are merged together with the metadata from the file */}}
-                {{ if in "jpg jpeg tiff" $original.MediaType.SubType }}
-                    {{ if $original.Exif }}
-                        {{ $metadata = $original.Exif.Tags }}
+                {{ if in "jpg jpeg tiff" $img.MediaType.SubType }}
+                    {{ if $img.Exif }}
+                        {{ $metadata = $img.Exif.Tags }}
                     {{ end }}
 
                 {{ end }}
@@ -118,18 +118,18 @@
                 {{ end }}
 
                 {{/* Create thumbnail, rotate it if needed */}}
-                {{ $thumbnail := ($original.Fit (printf "%s %s" $thumbnailResizeOptions $rotation)) }}
+                {{ $thumbnail := ($img.Fit (printf "%s %s" $thumbnailResizeOptions $rotation)) }}
 
 
                 <div>
                     {{ $full := "" }}
                     {{ if $imageResizeOptions }}
                         {{/* Downscale gallery image, rotate it if needed */}}
-                        {{ $full = ($original.Fit (printf "%s %s" $imageResizeOptions $rotation)) }}
+                        {{ $full = ($img.Fit (printf "%s %s" $imageResizeOptions $rotation)) }}
                     {{ else }}
-                        {{ $full = $original }}
+                        {{ $full = $img }}
                     {{ end }}
-                    <a href="{{ .RelPermalink }}"
+                    <a href="{{ $original.RelPermalink }}"
                         class="galleryImg"
                         {{ with $metadata }}
                             {{ if .Title }}
@@ -173,6 +173,7 @@
                         >
                     </a>
                 </div>
+            {{ end }}
             {{ end }}
         {{ end }}
     </div>
