@@ -32,13 +32,13 @@
     {{ if or (index .Site.Params.galleryColumns .Section) (index .Site.Params.galleryColumns $firstPost.Section) }}
 
         {{ $posts := $paginator.Pages }}
-        {{ partial "postgallery" (dict "posts" $posts "page" .Page "ctx" .) }}
+        {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
 
     {{ else }}
 
         <!-- fork for regular content sections (predominantly text) -->
         <div class="container">
-            {{ range $paginator.Pages 5 }}
+            {{ range $paginator.Pages }}
                 <div class="card m-5">
                     <div class="card-content">
                         <div class="content">
