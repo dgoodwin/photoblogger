@@ -17,6 +17,7 @@
     gallery so we can hardcode -->
 {{ $randInt :=  math.Rand | mul 100000 | math.Floor }}
 
+
 {{ $galleryId := (printf "gallery-%v" $randInt) }}
 {{ $galleryWrapperId := (printf "gallery-%v-wrapper" $randInt) }}
 

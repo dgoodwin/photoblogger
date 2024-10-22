@@ -1,14 +1,14 @@
 // allows us to use initial variables in our override
 @import 'sass/utilities/initial-variables.sass';
 
-$scheme-main: $grey-darker;
-$scheme-invert: $white;
-$scheme-main-bis: $grey-dark;
+$scheme-main: $white;
+$scheme-invert: $grey-darker;
+$scheme-main-bis: $grey-light;
 
-$primary: $red;
+$primary: $grey-darker;
 
-$text: $white-ter; // normal text
-$text-strong: $red; // header tags
+$text: $grey-darker; // normal text
+$text-strong: $grey-darker; // header tags
 $link: $cyan;
 $link-hover: $grey-dark;
 $footer-background-color: $grey-dark;
