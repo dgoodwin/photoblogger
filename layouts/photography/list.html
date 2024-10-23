@@ -2,7 +2,7 @@
 
 <section class="section">
     <!-- fork for photography/gallery sections, if we have a galleryColumns entry for this section -->
-    <div class="container is-two-thirds-tablet is-full-mobile">
+    <div class="container is-full-tablet is-full-mobile">
         <h1>{{ .Title }}</h1>
     </div>
     {{ $paginator := .Paginate .RegularPagesRecursive 5 }}
@@ -27,8 +27,10 @@
         </nav>
     {{ end }}
 
-    {{ $posts := $paginator.Pages }}
-    {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
+    <div class="container is-full-tablet is-full-mobile">
+        {{ $posts := $paginator.Pages }}
+        {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
+    </div>
 
     {{ $pageIter := .Paginator }}
     {{ if gt $pageIter.TotalPages 1 }}
