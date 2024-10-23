@@ -15,7 +15,7 @@
                 {{ .Content }}
 
                 {{ $posts := slice . }}
-                {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
+                {{ partial "postgallery" (dict "posts" $posts "mode" "displayImages" "ctx" .) }}
 
                 <div class="tags mt-3 is-centered">
                     {{ with .Params.tags }}

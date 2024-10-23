@@ -10,7 +10,7 @@
 
     <div class="container is-full-tablet is-full-mobile">
         {{ $posts := $paginator.Pages }}
-        {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
+        {{ partial "postgallery" (dict "posts" $posts "mode" "linkToPosts" "ctx" .) }}
     </div>
 
     {{ $pageIter := .Paginator }}

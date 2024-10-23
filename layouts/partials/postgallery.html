@@ -4,8 +4,10 @@
 {{ $rowHeight := default ($.ctx.Site.Params.galleryRowHeight | default 150) }}
 {{ $margins := default ($.ctx.Site.Params.galleryRowMargins | default 5) }}
 {{ $randomize := default ($.ctx.Site.Params.galleryRandomize | default false) }}
-{{ $justifiedGalleryParameters := default ($.ctx.Site.Params.galleryJustifiedGalleryParameters | default "") }}
 {{ $embedPreview := default ($.ctx.Site.Params.galleryEmbedPreview | default true) }}
+
+{{/* unused */}}
+{{ $justifiedGalleryParameters := default ($.ctx.Site.Params.galleryJustifiedGalleryParameters | default "") }}
 
 
 <script src="{{ "shortcode-gallery/jquery-3.6.1.min.js" | relURL }}"></script>
@@ -13,14 +15,95 @@
 <script src="{{ "shortcode-gallery/justified_gallery/jquery.justifiedGallery.min.js"| relURL }}"></script>
 <link rel="stylesheet" href="{{ "shortcode-gallery/justified_gallery/justifiedGallery.min.css"| relURL }}"/>
 
+{{ if eq $.mode "displayImages" }}
+<script src="/js/jquery.swipebox.min.js"></script>
+<link rel="stylesheet" href="/css/swipebox.min.css"/>
+{{ end }}
+
 <!-- Skipped use of Ordinal here, I don't think list page would ever show more than one
     gallery so we can hardcode -->
 {{ $randInt :=  math.Rand | mul 100000 | math.Floor }}
 
 
 {{ $galleryId := (printf "gallery-%v" $randInt) }}
-{{ $galleryWrapperId := (printf "gallery-%v-wrapper" $randInt) }}
 
+<div id="{{ $galleryId }}">
+    {{ range $original := $.posts }}
+    {{ range $img := .Resources.ByType "image" }}
+    {{ if eq $img.ResourceType "image" }}
+
+    {{ $metadata := dict }}
+
+    {{/* If the image has exif informations, those are merged together with the metadata from the file */}}
+    {{ if in "jpg jpeg tiff" $img.MediaType.SubType }}
+    {{ if $img.Exif }}
+    {{ $metadata = $img.Exif.Tags }}
+    {{ end }}
+    {{ end }}
+
+
+    {{/* Compute rotation to correct orientation of thumbnail (and downscaled gallery images) in case the exif contains a value for orientation. See issue #22. */}}
+    {{ $rotation := "" }}
+    {{ with $metadata.Orientation }}
+    {{/* Exif orientation is explained here: https://www.impulseadventure.com/photo/exif-orientation.html */}}
+    {{/* Example images can be found here: https://github.com/recurser/exif-orientation-examples*/}}
+    {{/* We can fix orientation 3, 6 and 8 by rotating. */}}
+    {{/* To fix orientation 2, 4, 5, 6 we would need to flip the image, sadly hugo can not do that. */}}
+    {{/* So we can only fix them a "bit" by rotating them but they will be mirrored. */}}
+    {{/* An orientation of 2 means that the image only needs to be flipped so we do nothing in that case. */}}
+    {{/* An orientation of 1 means that the image has the correct rotation and is not mirrored. */}}
+    {{ if or (eq . 8) (eq . 7) }}
+    {{ $rotation = " r90" }}
+    {{ else if or (eq . 3) (eq . 4) }}
+    {{ $rotation = " r180" }}
+    {{ else if or (eq . 6) (eq . 5) }}
+    {{ $rotation = " r270" }}
+    {{ end }}
+    {{ end }}
+
+    {{/* Create thumbnail, rotate it if needed */}}
+    {{ $thumbnail := ($img.Fit (printf "%s %s" $thumbnailResizeOptions $rotation)) }}
+
+    <div>
+        {{ $full := "" }}
+        {{ if $imageResizeOptions }}
+        {{/* Downscale gallery image, rotate it if needed */}}
+        {{ $full = ($img.Fit (printf "%s %s" $imageResizeOptions $rotation)) }}
+        {{ else }}
+        {{ $full = $img }}
+        {{ end }}
+
+        {{ if eq $.mode "linkToPosts" }}
+        <a href="{{ $original.RelPermalink }}?display={{ $img }}"
+           class="galleryImg"
+           {{ with $metadata }}
+           {{ if .Title }}
+           title="{{ .Title }}"
+           {{ else if .ImageDescription }}
+           title="{{ .ImageDescription }}"
+           {{ end }}
+           {{ end }}
+           >
+       {{ else }}
+       <a href="{{ $img }}" class="swipeboxImg">
+           {{/* TODO: scale to display size not the full image */}}
+       {{ end }}
+           <img width="{{ $thumbnail.Width }}"
+                height="{{ $thumbnail.Height }}"
+                src="{{ $thumbnail.RelPermalink }}"
+                {{ with $metadata }}
+                {{ if .ImageDescription }}
+                alt="{{ .ImageDescription }}"
+                {{ end }}
+                {{ end }}
+                />
+        </a>
+
+    </div>
+            {{ end }}
+            {{ end }}
+            {{ end }}
+</div>
 
 <script>
     if (!jQuery) {
@@ -36,13 +119,15 @@
 
         // before the gallery initialization the listener has to be added
         // else we can get a race condition and the listener is never called
+        /*
         gallery.on('jg.complete', () => {
-            swipeboxInstance = $('.galleryImg').swipebox(
+            swipeboxInstance = $('.swipeboxImg').swipebox(
                 jQuery.extend({},
                     { {{ $justifiedGalleryParameters | safeJS }} }
                 )
             );
         });
+*/
 
         // initialize the justified gallery
         gallery.justifiedGallery({
@@ -53,82 +138,16 @@
             waitThumbnailsLoad : false,
             lastRow : {{ $lastRowJustification }},
             captions : false,
-            // if there is at least one filter option
+        }).on('jg.complete', () => {
+            swipeboxInstance = $('.swipeboxImg').swipebox(
+                jQuery.extend({},
+                    {
+                        loopAtEnd: true
+                    }
+                )
+            );
         });
 
     });
 </script>
-
-<div id="{{ $galleryWrapperId }}" class="gallery-wrapper">
-    <div id="{{ $galleryId }}" class="justified-gallery">
-        {{ range $original := $.posts }}
-        {{ range $img := .Resources.ByType "image" }}
-        {{ if eq $img.ResourceType "image" }}
-
-        {{ $metadata := dict }}
-
-        {{/* If the image has exif informations, those are merged together with the metadata from the file */}}
-        {{ if in "jpg jpeg tiff" $img.MediaType.SubType }}
-        {{ if $img.Exif }}
-        {{ $metadata = $img.Exif.Tags }}
-        {{ end }}
-        {{ end }}
-
-
-        {{/* Compute rotation to correct orientation of thumbnail (and downscaled gallery images) in case the exif contains a value for orientation. See issue #22. */}}
-        {{ $rotation := "" }}
-        {{ with $metadata.Orientation }}
-        {{/* Exif orientation is explained here: https://www.impulseadventure.com/photo/exif-orientation.html */}}
-        {{/* Example images can be found here: https://github.com/recurser/exif-orientation-examples*/}}
-        {{/* We can fix orientation 3, 6 and 8 by rotating. */}}
-        {{/* To fix orientation 2, 4, 5, 6 we would need to flip the image, sadly hugo can not do that. */}}
-        {{/* So we can only fix them a "bit" by rotating them but they will be mirrored. */}}
-        {{/* An orientation of 2 means that the image only needs to be flipped so we do nothing in that case. */}}
-        {{/* An orientation of 1 means that the image has the correct rotation and is not mirrored. */}}
-        {{ if or (eq . 8) (eq . 7) }}
-        {{ $rotation = " r90" }}
-        {{ else if or (eq . 3) (eq . 4) }}
-        {{ $rotation = " r180" }}
-        {{ else if or (eq . 6) (eq . 5) }}
-        {{ $rotation = " r270" }}
-        {{ end }}
-        {{ end }}
-
-        {{/* Create thumbnail, rotate it if needed */}}
-        {{ $thumbnail := ($img.Fit (printf "%s %s" $thumbnailResizeOptions $rotation)) }}
-
-        <div>
-            {{ $full := "" }}
-            {{ if $imageResizeOptions }}
-            {{/* Downscale gallery image, rotate it if needed */}}
-            {{ $full = ($img.Fit (printf "%s %s" $imageResizeOptions $rotation)) }}
-            {{ else }}
-            {{ $full = $img }}
-            {{ end }}
-            <a href="{{ $original.RelPermalink }}"
-               class="galleryImg"
-               {{ with $metadata }}
-               {{ if .Title }}
-               title="{{ .Title }}"
-               {{ else if .ImageDescription }}
-               title="{{ .ImageDescription }}"
-               {{ end }}
-               {{ end }}
-               >
-               <img width="{{ $thumbnail.Width }}"
-                    height="{{ $thumbnail.Height }}"
-                    src="{{ $thumbnail.RelPermalink }}"
-                    {{ with $metadata }}
-                    {{ if .ImageDescription }}
-                    alt="{{ .ImageDescription }}"
-                    {{ end }}
-                    {{ end }}
-                    />
-            </a>
-        </div>
-                {{ end }}
-                {{ end }}
-                {{ end }}
-    </div>
-</div>
 
