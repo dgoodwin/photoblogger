@@ -136,6 +136,26 @@
                     }
                 )
             );
+            // Check if a query parameter "image" is present in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const imageFilename = urlParams.get('display');
+
+            if (imageFilename) {
+                // Find the index of the image that matches the filename
+                const images = $('.swipeboxImg').toArray();
+                const targetIndex = images.findIndex(image => {
+                    return $(image).attr('href').includes(imageFilename);
+                });
+
+                if (targetIndex >= 0) {
+                    // Open the gallery starting at the specific index
+                    $.swipebox(images.map(image => ({
+                        href: $(image).attr('href'),
+                        title: $(image).attr('title') || ''
+                    })), { initialIndexOnArray: targetIndex });
+                }
+            }
+
         });
 
     });
