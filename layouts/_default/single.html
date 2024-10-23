@@ -13,6 +13,10 @@
                     </div>
                 </nav>
                 {{ .Content }}
+
+                {{ $posts := slice . }}
+                {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
+
                 <div class="tags mt-3 is-centered">
                     {{ with .Params.tags }}
                     {{ range . }}
