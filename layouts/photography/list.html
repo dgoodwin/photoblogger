@@ -27,19 +27,8 @@
         </nav>
     {{ end }}
 
-    <div class="container">
-        {{ range $paginator.Pages }}
-            <div class="card m-5">
-                <div class="card-content">
-                    <div class="content">
-                        <div class="title is-3"><a class="title has-text-link" href="{{ .RelPermalink }}">{{ .Title }}</a></div>
-                        {{ partial "metadata.html" . }}
-                        <p>{{ .Summary }}</p>
-                    </div>
-                </div>
-            </div>
-        {{ end }}
-    </div>
+    {{ $posts := $paginator.Pages }}
+    {{ partial "postgallery" (dict "posts" $posts "ctx" .) }}
 
     {{ $pageIter := .Paginator }}
     {{ if gt $pageIter.TotalPages 1 }}
