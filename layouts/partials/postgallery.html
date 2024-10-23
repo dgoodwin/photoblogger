@@ -85,6 +85,7 @@
            {{ end }}
            >
        {{ else }}
+       {{/* can add title here to display on the top of the images */}}
        <a href="{{ $img }}" class="swipeboxImg">
            {{/* TODO: scale to display size not the full image */}}
        {{ end }}
@@ -117,18 +118,6 @@
         // the instance of swipebox, it will be set once justifiedGallery is initialized
         let swipeboxInstance = null;
 
-        // before the gallery initialization the listener has to be added
-        // else we can get a race condition and the listener is never called
-        /*
-        gallery.on('jg.complete', () => {
-            swipeboxInstance = $('.swipeboxImg').swipebox(
-                jQuery.extend({},
-                    { {{ $justifiedGalleryParameters | safeJS }} }
-                )
-            );
-        });
-*/
-
         // initialize the justified gallery
         gallery.justifiedGallery({
             rowHeight : {{ $rowHeight }},
@@ -142,7 +131,8 @@
             swipeboxInstance = $('.swipeboxImg').swipebox(
                 jQuery.extend({},
                     {
-                        loopAtEnd: true
+                        loopAtEnd: true,
+                        useSVG: false
                     }
                 )
             );
