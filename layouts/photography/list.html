@@ -7,25 +7,6 @@
     </div>
     {{ $paginator := .Paginate .RegularPagesRecursive 5 }}
 
-    <!-- Pagination nav, duplicated below -->
-    {{ $pageIter := .Paginator }}
-    {{ if gt $pageIter.TotalPages 1 }}
-        <nav class="pagination" role="navigation" aria-label="pagination">
-            {{ if $pageIter.HasPrev }}
-            <a class="pagination-previous" href="{{ $pageIter.Prev.URL }}">Prev</a>
-            {{ end }}
-            {{ if $pageIter.HasNext }}
-            <a class="pagination-next" href="{{ $pageIter.Next.URL }}">Next</a>
-            {{ end }}
-            <ul class="pagination-list">
-                {{ range $paginator.Pagers }}
-                    <li>
-                        <a class="pagination-link{{ if eq . $pageIter }} is-current{{ end }}" href="{{ .URL }}" aria-label="Page {{ .PageNumber }}">{{ .PageNumber }}</a>
-                    </li>
-                {{ end }}
-            </ul>
-        </nav>
-    {{ end }}
 
     <div class="container is-full-tablet is-full-mobile">
         {{ $posts := $paginator.Pages }}
