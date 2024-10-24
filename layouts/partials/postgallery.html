@@ -157,7 +157,11 @@
                     $.swipebox(images.map(image => ({
                         href: $(image).attr('href'),
                         title: $(image).attr('title') || ''
-                    })), { initialIndexOnArray: targetIndex });
+                    })), {
+                        initialIndexOnArray: targetIndex,
+                        useSVG: false,
+                        loopAtEnd: true
+                    });
                 }
             }
 
