@@ -140,12 +140,10 @@
             // Check if a query parameter "image" is present in the URL
             const urlParams = new URLSearchParams(window.location.search);
             const imageFilename = urlParams.get('display');
-            console.log("requested to display: " + imageFilename)
 
             // If so, open that specific image automatically.
             if (imageFilename) {
                 const searchForBase = imageFilename.substring(0, imageFilename.lastIndexOf('.'));
-                console.log("searchForBase = " + searchForBase)
                 // Find the index of the image that matches the filename, but hugo has renamed it
                 // due to the resize to a format like [originalfilename]_huJIBBERISH.jpg. Search for
                 // starts with our base filename.
@@ -154,7 +152,6 @@
                     return $(image).attr('href').includes(searchForBase);
                 });
 
-                console.log("targetIndex = " + targetIndex)
                 if (targetIndex >= 0) {
                     // Open the gallery starting at the specific index
                     $.swipebox(images.map(image => ({
