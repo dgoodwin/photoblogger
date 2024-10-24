@@ -41,7 +41,6 @@
     {{ end }}
     {{ end }}
 
-
     {{/* Compute rotation to correct orientation of thumbnail (and downscaled gallery images) in case the exif contains a value for orientation. See issue #22. */}}
     {{ $rotation := "" }}
     {{ with $metadata.Orientation }}
@@ -64,14 +63,15 @@
     {{/* Create thumbnail, rotate it if needed */}}
     {{ $thumbnail := ($img.Fit (printf "%s %s" $thumbnailResizeOptions $rotation)) }}
 
+    {{ $full := "" }}
+    {{ if $imageResizeOptions }}
+    {{/* Downscale gallery image, rotate it if needed */}}
+    {{ $full = ($img.Fit (printf "%s %s" $imageResizeOptions $rotation)) }}
+    {{ else }}
+    {{ $full = $img }}
+    {{ end }}
+
     <div>
-        {{ $full := "" }}
-        {{ if $imageResizeOptions }}
-        {{/* Downscale gallery image, rotate it if needed */}}
-        {{ $full = ($img.Fit (printf "%s %s" $imageResizeOptions $rotation)) }}
-        {{ else }}
-        {{ $full = $img }}
-        {{ end }}
 
         {{ if eq $.mode "linkToPosts" }}
         <a href="{{ $original.RelPermalink }}?display={{ $img }}"
@@ -86,8 +86,7 @@
            >
        {{ else }}
        {{/* can add title here to display on the top of the images */}}
-       <a href="{{ $img }}" class="swipeboxImg">
-           {{/* TODO: scale to display size not the full image */}}
+       <a href="{{ $full.RelPermalink }}" class="swipeboxImg">
        {{ end }}
            <img width="{{ $thumbnail.Width }}"
                 height="{{ $thumbnail.Height }}"
@@ -114,11 +113,7 @@
     $( document ).ready(() => {
         const gallery = $("#{{ $galleryId }}");
         {{ $lastRowJustification := default ($.ctx.Site.Params.galleryLastRow | default "justify") }}
-
-        // the instance of swipebox, it will be set once justifiedGallery is initialized
         let swipeboxInstance = null;
-
-        // initialize the justified gallery
         gallery.justifiedGallery({
             rowHeight : {{ $rowHeight }},
             margins : {{ $margins }},
@@ -136,10 +131,12 @@
                     }
                 )
             );
+
             // Check if a query parameter "image" is present in the URL
             const urlParams = new URLSearchParams(window.location.search);
             const imageFilename = urlParams.get('display');
 
+            // If so, open that specific image automatically.
             if (imageFilename) {
                 // Find the index of the image that matches the filename
                 const images = $('.swipeboxImg').toArray();
