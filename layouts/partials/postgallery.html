@@ -1,6 +1,6 @@
 {{ $thumbnailResizeOptions := default ($.ctx.Site.Params.galleryThumbnailResizeOptions | default "300x150 q85 Lanczos") }}
 {{ $imageResizeOptions := default $.ctx.Site.Params.galleryImageResizeOptions }}
-{{ $sortOrder := default ($.ctx.Site.Params.gallerySortOrder | default "asc") }}
+{{ $sortOrder := default ($.ctx.Site.Params.gallerySortOrder | default "asc") $.ctx.Params.gallerySortOrder }}
 {{ $rowHeight := default ($.ctx.Site.Params.galleryRowHeight | default 150) }}
 {{ $margins := default ($.ctx.Site.Params.galleryRowMargins | default 5) }}
 {{ $randomize := default ($.ctx.Site.Params.galleryRandomize | default false) }}
@@ -29,7 +29,7 @@
 
 <div id="{{ $galleryId }}">
     {{ range $original := $.posts }}
-    {{ range $img := .Resources.ByType "image" }}
+    {{ range $img := sort (.Resources.ByType "image") "Name" $sortOrder }}
     {{ if eq $img.ResourceType "image" }}
 
     {{ $metadata := dict }}
