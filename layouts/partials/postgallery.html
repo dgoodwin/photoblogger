@@ -10,7 +10,8 @@
 {{ $justifiedGalleryParameters := default ($.ctx.Site.Params.galleryJustifiedGalleryParameters | default "") }}
 
 
-<script src="{{ "shortcode-gallery/jquery-3.6.1.min.js" | relURL }}"></script>
+<!-- implicit dependency on shortcode gallery here -->
+<script src="{{ "shortcode-gallery/jquery-3.7.1.min.js" | relURL }}"></script>
 <script src="{{ "shortcode-gallery/lazy/jquery.lazy.min.js" | relURL }}"></script>
 <script src="{{ "shortcode-gallery/justified_gallery/jquery.justifiedGallery.min.js"| relURL }}"></script>
 <link rel="stylesheet" href="{{ "shortcode-gallery/justified_gallery/justifiedGallery.min.css"| relURL }}"/>

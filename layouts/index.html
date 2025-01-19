@@ -6,21 +6,23 @@
     <div class="subtitle is-5">{{ .Site.Params.homePage.description }}</div>
     {{ .Content }}
 
+
+    <!-- limit to the most recent posts for the home page -->
+    <!--
     {{ if .Site.Params.homePage.latestImagesSection }}
     {{ $posts := where .Site.RegularPages ".Section" .Site.Params.homePage.latestImagesSection }}
-    <!-- limit to the most recent posts for the home page -->
     {{ $posts = first 5 $posts }}
     {{ partial "postgallery" (dict "posts" $posts "mode" "linkToPosts" "ctx" .) }}
     {{ end }}
-
-
-    <!--
-    <h3>Latest Portfolio Images<h3>
-    {{ if .Site.Params.homePage.mainPageImageTag }}
-        {{ $posts2 := where .Site.RegularPages "Params.tags" "intersect" (slice .Site.Params.homePage.mainPageImageTag) }}
-        {{ partial "postgallery" (dict "posts" $posts2 "page" .Page "ctx" .) }}
-    {{ end }}
     -->
+
+    {{ if .Site.Params.homePage.portfolioPost }}
+    {{ $post := .Site.GetPage "portfolio" }}
+    {{ if $post }}
+    {{ partial "postgallery" (dict "posts" (slice $post) "mode" "linkToPosts" "ctx" .) }}
+    {{ end }}
+    {{ end }}
+
 </div>
 </section>
 
